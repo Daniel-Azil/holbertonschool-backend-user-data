@@ -31,7 +31,7 @@ class DB:
             DBSession = sessionmaker(bind=self._engine)
             self.__session = DBSession()
         return self.__session
-    
+
     def add_user(self, email: str, hashed_password: str) -> User:
         """Add a new user to the database
         """
@@ -39,4 +39,17 @@ class DB:
         self._session.add(user)
         self._session.commit()
         return user
-    
+
+    def find_user_by(self, **kwargs) -> User:
+        """
+            A method that finds a user by a given attribute
+        """
+        if kwargs is None:
+            raise InvalidRequestError
+        for each_key in kwargs.keys():
+            if each_key not in User.__table__.columns.keys():
+                raise InvalidRequestError
+        result = self._session.query(User).filter_by(**kwargs).first()
+        if result is None:
+            raise NoResultFound
+        return result
