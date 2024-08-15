@@ -39,27 +39,3 @@ class DB:
         self._session.add(user)
         self._session.commit()
         return user
-
-    def find_user_by(self, **kwargs) -> User:
-        """Find a user by arbitrary attributes and return the first row found
-        """
-        if kwargs is None:
-            raise InvalidRequestError
-        for k in kwargs.keys():
-            if k not in User.__table__.columns.keys():
-                raise InvalidRequestError
-        query = self._session.query(User).filter_by(**kwargs).first()
-        if query is None:
-            raise NoResultFound
-        return query
-
-    def update_user(self, user_id: int, **kwargs) -> None:
-        """Update the user’s attributes as passed in the arguments
-        """
-        user = self.find_user_by(id=user_id)
-        for k in kwargs.keys():
-            if k not in User.__table__.columns.keys():
-                raise ValueError
-        for k, v in kwargs.items():
-            setattr(user, k, v)
-        self._session.commit()
