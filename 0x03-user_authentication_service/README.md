@@ -6,6 +6,7 @@ This project implements a user authentication service using Flask, SQLAlchemy, a
 
 ```bash
 pip3 install bcrypt
+```
 
 ## User Model
 
@@ -33,7 +34,7 @@ The `DB` class manages the database:
 from auth import _hash_password
 
 print(_hash_password("YourPassword"))
-
+```
 
 ## Register User
 
@@ -44,7 +45,7 @@ from auth import Auth
 
 auth = Auth()
 auth.register_user("email@example.com", "password")
-
+```
 
 
 ## Basic Flask App
@@ -54,7 +55,7 @@ Run the Flask app:
 ```python
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port="5000")
-
+```
 
 ## Register User Endpoint
 
@@ -62,3 +63,4 @@ Register a user via the `/users` endpoint:
 
 ```bash
 curl -XPOST localhost:5000/users -d 'email=bob@me.com' -d 'password=mySuperPwd'
+```
