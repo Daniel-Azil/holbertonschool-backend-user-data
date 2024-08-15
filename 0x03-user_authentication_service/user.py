@@ -11,7 +11,7 @@ Base = declarative_base()
 
 class User(Base):
     """
-        A class that creates the user model
+        A class that creates the user model.
     """
     __tablename__ = 'users'
 
