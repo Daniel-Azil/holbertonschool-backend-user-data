@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
     A module that complete the DB class provided below
     to implement the add_user method.
