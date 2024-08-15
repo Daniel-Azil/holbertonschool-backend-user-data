@@ -60,3 +60,19 @@ class DB:
         if result is None:
             raise NoResultFound
         return result
+
+    def update_user(self, user_id: int, **kwargs) -> None:
+        """
+            A method that updates a user by a given attribute
+            Args:
+                user_id (int): The ID of the user to update.
+                **kwargs: Keyword arguments representing the
+                          attributes to update.
+        """
+        current_user = self.find_user_by(id=user_id)
+        for attribute in kwargs.keys():
+            if attribute not in User.__table__.columns.keys():
+                raise ValueError
+        for attribute, value in kwargs.items():
+            setattr(current_user, attribute, value)
+        self._session.commit()
