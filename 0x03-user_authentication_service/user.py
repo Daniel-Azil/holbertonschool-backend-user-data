@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
     A module that utilises SQLAlchemy to create User model for
     database table named users
