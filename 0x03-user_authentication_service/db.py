@@ -1,12 +1,13 @@
-#!/usr/bin/env python3
-"""DB module
 """
-from sqlalchemy import create_engine
+    A module that complete the DB class provided below
+    to implement the add_user method.
+"""
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
 from sqlalchemy.exc import InvalidRequestError
 from sqlalchemy.orm.exc import NoResultFound
+from sqlalchemy import create_engine
 
 from user import Base, User
 
@@ -14,7 +15,6 @@ from user import Base, User
 class DB:
     """DB class
     """
-
     def __init__(self) -> None:
         """Initialize a new DB instance
         """
@@ -33,9 +33,23 @@ class DB:
         return self.__session
 
     def add_user(self, email: str, hashed_password: str) -> User:
-        """Add a new user to the database and return the User object
+        """Add a new user to the database
         """
         user = User(email=email, hashed_password=hashed_password)
         self._session.add(user)
         self._session.commit()
         return user
+
+    def find_user_by(self, **kwargs) -> User:
+        """
+            A method that finds a user by a given attribute
+        """
+        if kwargs is None:
+            raise InvalidRequestError
+        for each_key in kwargs.keys():
+            if each_key not in User.__table__.columns.keys():
+                raise InvalidRequestError
+        result = self._session.query(User).filter_by(**kwargs).first()
+        if result is None:
+            raise NoResultFound
+        return result
