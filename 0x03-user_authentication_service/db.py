@@ -1,13 +1,15 @@
+#!/usr/bin/env python3
 """
     A module that complete the DB class provided below
     to implement the add_user method.
 """
+from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
 from sqlalchemy.exc import InvalidRequestError
 from sqlalchemy.orm.exc import NoResultFound
-from sqlalchemy import create_engine
+
 
 from user import Base, User
 
